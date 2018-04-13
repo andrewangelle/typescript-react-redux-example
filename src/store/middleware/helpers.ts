@@ -1,4 +1,4 @@
-type Normalized = {id: object};
+export type Normalized = {id: object};
 
 export const normalizeData =
   (arr: Array<any>): Normalized =>

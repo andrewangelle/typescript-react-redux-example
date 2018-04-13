@@ -1,10 +1,9 @@
-import { normalizeData } from './helpers';
+import { normalizeData, Normalized } from './helpers';
 
-export async function fetchTableData() {
+export async function fetchTableData(): Promise<Normalized> {
   const url = 'http://jsonplaceholder.typicode.com/posts'
   const res = await fetch(url)
   const jsonResults = await res.json()
-  const Data = normalizeData(jsonResults)
 
-  return Data
+  return normalizeData(jsonResults)
 }
