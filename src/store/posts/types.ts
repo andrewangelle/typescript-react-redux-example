@@ -6,15 +6,15 @@ export interface PostData {
   body: string;
 }
 
-export interface FilterOptions {
+export interface PostFilter {
   filterBy: string;
   currentValue: string | number;
+  data?: Array<PostData>
 }
 
-export interface FilterSelector extends FilterOptions {
+export interface FilterSelector extends PostFilter {
   userIdValues: Array<number>;
   idValues: Array<number>;
-  data: Array<PostData>;
 }
 
 export interface BaseAction {

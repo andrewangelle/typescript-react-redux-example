@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import Root from './containers/Root';
 import registerServiceWorker from './registerServiceWorker';
 import './styles/index.css';
-import { configureStore } from './store/configureStore.dev';
+import { configureStore } from './store/configureStore';
 import { createBrowserHistory } from 'history';
 import { RootState } from './store/index'
 

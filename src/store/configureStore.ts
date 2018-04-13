@@ -1,7 +1,22 @@
-const { NODE_ENV } = process.env;
+import { createStore, applyMiddleware } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import { History } from 'history';
+import { RootState, reducers } from './index';
 
-if (NODE_ENV === 'production' || NODE_ENV === 'test') {
-  module.exports = require('./configureStore.prod');
-} else {
-  module.exports = require('./configureStore.dev');
+
+export function configureStore(history: History, initialState: RootState){
+  const composeEnhancers = composeWithDevTools({});
+  const router = routerMiddleware(history);
+  const logger = createLogger({collapsed: true});
+
+  return createStore(
+    reducers,
+    initialState,
+    composeEnhancers(
+      applyMiddleware(router, logger, thunk)
+    )
+  )
 }

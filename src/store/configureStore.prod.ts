@@ -1,14 +1,8 @@
-import { createStore, applyMiddleware, Reducer, combineReducers } from 'redux';
-import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { History } from 'history';
-import { RootState } from './index';
-import postsReducer from './posts/reducers';
-
-const reducers: Reducer<RootState> = combineReducers<RootState>({
-  router: routerReducer,
-  posts: postsReducer
-})
+import { RootState, reducers } from './index';
 
 export function configureStore(history: History, initialState: RootState) {
   const router = routerMiddleware(history);

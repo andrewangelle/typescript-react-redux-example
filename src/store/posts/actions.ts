@@ -6,7 +6,7 @@ import {
   SetTableFilter,
   PostData,
   PostsActions,
-  FilterOptions
+  PostFilter
 } from './types';
 import * as postsApi from '../middleware/posts'
 
@@ -28,7 +28,7 @@ export const getPostsFailure: ActionCreator<GetPostsFailureAction> = (error: Err
   }
 })
 
-export const setTableFilter: ActionCreator<SetTableFilter> = (options: FilterOptions) => ({
+export const setTableFilter: ActionCreator<SetTableFilter> = (options: PostFilter) => ({
   type: 'UPDATE_FILTER',
   payload: {
     options
@@ -47,7 +47,7 @@ export function fetchPostsData(): (dispatch: Dispatch<PostsActions>) => Promise<
   }
 }
 
-export function setFilter(value: FilterOptions): (Dispatch<PostsActions>) {
+export function setFilter(value: PostFilter): (Dispatch<PostsActions>) {
   return (dispatch: Dispatch<PostsActions>) => {
     dispatch(setTableFilter(value))
   }

@@ -1,22 +1,17 @@
 import { createSelector } from 'reselect';
-import { RootState, PostState } from '../store';
+import { RootState, PostState } from '../index';
+import { FilterSelector } from './types';
 import uniq from 'lodash/uniq'
 
-type PostFilters = {
-  filterBy: string;
-  currentValue: string | number;
-  data: Array<any>;
-}
-
 const getPosts = (state: RootState): PostState['data'] => state.posts.data;
-const getFilters = (state: RootState): PostFilters  => state.posts.filters;
+const getFilters = (state: RootState): PostState['filters'] => state.posts.filters;
 
 export const filterSelector = createSelector(
   [ getPosts, getFilters ],
-  (posts: PostState['data'], filters: PostFilters) => {
+  (posts: PostState['data'], filters: PostState['filters']) => {
     const currentState = (Object as any).values(posts).map(post => Object.assign({}, post));
 
-    const nextState = {
+    const nextState: FilterSelector = {
       ...filters,
       data: currentState,
       userIdValues: [...uniq(currentState.map(post => post.userId))],

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RootState } from '../store'
+import { RootState } from '../store';
 import { fetchPostsData } from '../store/posts/actions';
-import { filterSelector } from '../selectors/posts';
+import { filterSelector } from '../store/posts/selectors';
 import Table  from 'antd/lib/table';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Animate from '../components/Animate';
 import UITableHeader from './UITableHeader';
 import '../styles/table.scss';
 
-interface State {
+type State = {
   filteredPosts: any;
   loading: boolean;
 };
@@ -84,7 +84,3 @@ export default connect<State, Props>(
   mapStateToProps,
   mapDispatchToProps
  )(UITable);
-
-
- /*import { RouteComponentProps } from 'react-router-dom'
-import { withRouter, RouterProps } from 'react-router'*/
