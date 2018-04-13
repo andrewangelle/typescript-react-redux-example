@@ -37,8 +37,8 @@ export const filterSelector = createSelector(
           return {
             ...nextState,
             data: currentState.sort((a,b) => {
-              if(a.title < b.title) return -1;
-              if(a.title > b.title) return 1;
+              if(a.title < b.title) {return -1};
+              if(a.title > b.title) {return 1};
               return 0;
             })
           }
@@ -48,19 +48,20 @@ export const filterSelector = createSelector(
           return {
             ...nextState,
             data: currentState.sort((a,b) => {
-              if(a.title < b.title) return 1;
-              if(a.title > b.title) return -1;
+              if(a.title < b.title) {return 1};
+              if(a.title > b.title) {return -1};
               return 0;
             })
           }
         }
+        break;
       case 'Body':
         if(filters.currentValue === 'A-Z') {
           return {
             ...nextState,
             data: currentState.sort((a,b) => {
-              if(a.body < b.body) return -1;
-              if(a.body > b.body) return 1;
+              if(a.body < b.body) {return -1};
+              if(a.body > b.body) {return 1};
               return 0;
             })
           }
@@ -70,8 +71,8 @@ export const filterSelector = createSelector(
           return {
             ...nextState,
             data: currentState.sort((a,b) => {
-              if(a.body < b.body) return 1;
-              if(a.body > b.body) return -1;
+              if(a.body < b.body) {return 1};
+              if(a.body > b.body) {return -1};
               return 0;
             })
           }

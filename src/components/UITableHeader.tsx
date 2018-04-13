@@ -35,14 +35,14 @@ class UITableHeader extends React.Component<ComponentProps, LocalState> {
             onChange={(value: string) => this.updateFilters(value)}
             value={formValue}
             className={'filter-dropdown'}
-            >
+          >
             {values ?
               ((values as any).map(value =>
                 <Option
                   key={value}
                   title={`${title}`}
                   value={(this.renderOptionValueProp(value, title))}
-                  >
+                >
                   {value}
                 </Option>
               ))

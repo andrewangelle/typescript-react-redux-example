@@ -39,47 +39,27 @@ class UITable extends React.Component<State & Props> {
               rowKey={() => rowKey()}
               pagination={false}
               scroll={{ y: '100vh' }}
-              >
+            >
               <Column
-                title={(
-                  <UITableHeader
-                    title={'User Id'}
-                    values={filteredPosts.userIdValues}
-                   />
-                 )}
+                title={(<UITableHeader title={'User Id'} values={filteredPosts.userIdValues}/>)}
                 dataIndex={'userId'}
                 key={'userId'}
                 width={100}
               />
               <Column
-                title={(
-                  <UITableHeader
-                    title={'Id'}
-                    values={filteredPosts.idValues}
-                   />
-                 )}
+                title={(<UITableHeader title={'Id'} values={filteredPosts.idValues}/>)}
                 dataIndex={'id'}
                 key={'id'}
                 width={100}
               />
               <Column
-                title={(
-                  <UITableHeader
-                    title={'Title'}
-                    values={['A-Z', 'Z-A']}
-                   />
-                 )}
+                title={(<UITableHeader title={'Title'} values={['A-Z', 'Z-A']}/>)}
                 dataIndex={'title'}
                 key={'title'}
                 width={200}
               />
               <Column
-                title={(
-                  <UITableHeader
-                    title={'Body'}
-                    values={['A-Z', 'Z-A']}
-                   />
-                 )}
+                title={(<UITableHeader title={'Body'} values={['A-Z', 'Z-A']} />)}
                 dataIndex={'body'}
                 key={'body'}
                 width={200}
