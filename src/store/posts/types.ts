@@ -11,6 +11,12 @@ export interface FilterOptions {
   currentValue: string | number;
 }
 
+export interface FilterSelector extends FilterOptions {
+  userIdValues: Array<number>;
+  idValues: Array<number>;
+  data: Array<PostData>;
+}
+
 export interface BaseAction {
   type: string;
   payload?: object;

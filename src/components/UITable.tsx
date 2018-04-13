@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '../store'
-import { fetchPostsData } from '../store/posts/actions'
+import { fetchPostsData } from '../store/posts/actions';
 import { filterSelector } from '../selectors/posts';
 import Table  from 'antd/lib/table';
 import LoadingIndicator from '../components/LoadingIndicator';
