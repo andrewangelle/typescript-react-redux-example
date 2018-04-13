@@ -1,24 +1,26 @@
-import * as React from 'react';
+// external deps, type defs, utils
+import React, { Component } from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+// app level utils
+import { setTableFilter } from '../store/posts/actions'
+// UI related imports
 import Button from 'antd/lib/button';
 import Form from 'antd/lib/form';
 import Select from 'antd/lib/select';
-import { setTableFilter } from '../store/posts/actions'
 import '../styles/table.scss';
 
+// component level type defs
 interface ConnectedProps { setTableFilter: typeof setTableFilter; }
-interface InheritedProps extends ConnectedProps {
-  title: string;
-  values: Array<number> | Array<string>;
-}
+interface InheritedProps extends ConnectedProps { title: string; values: Array<number> | Array<string>; }
+type ComponentState = { formValue: string };
 type ComponentProps = InheritedProps & ConnectedProps;
-type LocalState = { formValue: string };
 
-class UITableHeader extends React.Component<ComponentProps, LocalState> {
-  public state: LocalState;
 
-  constructor(props: ComponentProps & LocalState) {
+class UITableHeader extends Component<ComponentProps, ComponentState> {
+  public state: ComponentState;
+
+  constructor(props: ComponentProps & ComponentState) {
     super(props);
     this.state = { formValue: '' }
   }
@@ -27,6 +29,7 @@ class UITableHeader extends React.Component<ComponentProps, LocalState> {
     const { formValue } = this.state;
     const { title, values } = this.props;
     let Option = Select.Option;
+
     return (
       <span>
         {title}
@@ -57,20 +60,9 @@ class UITableHeader extends React.Component<ComponentProps, LocalState> {
      )
   }
 
-  private renderOptionValueProp = (value: string, title: string) => {
-    let valueAsNumber: number
-
-    if (title === 'User Id' || title === 'Id'){
-      valueAsNumber = parseInt(value, 10);
-      return valueAsNumber
-    }
-
-    if (title === 'Body' || title === 'Title') {
-      return value
-    }
+  private updateLocalFormState = (value: string) => {
+    this.setState({ formValue: value })
   }
-
-  private updateLocalFormState = (value: string) => { this.setState({ formValue: value }) }
 
   private updateFilters = (value: string) => {
     const options = { filterBy: this.props.title, currentValue: value }
@@ -82,6 +74,23 @@ class UITableHeader extends React.Component<ComponentProps, LocalState> {
     const options = { filterBy: 'none', currentValue: 'none' }
     this.props.setTableFilter(options)
     this.updateLocalFormState('')
+  }
+
+  private renderOptionValueProp = (value: string, title: string) => {
+    /*
+      The value prop of AntD's option form elements are passed as strings when selected.
+      This methods takes care of the explicit edge cases where we need the value as an integer
+    */
+    let valueAsNumber: number
+
+    if (title === 'User Id' || title === 'Id'){
+      valueAsNumber = parseInt(value, 10);
+      return valueAsNumber
+    }
+
+    if (title === 'Body' || title === 'Title') {
+      return value
+    }
   }
 }
 

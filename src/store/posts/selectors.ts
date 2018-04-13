@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect';
 import { RootState, PostState } from '../index';
-import { FilterSelector } from './types';
+import { PostFilter } from './types';
 import uniq from 'lodash/uniq'
+
+interface FilterSelector extends PostFilter {
+  userIdValues: Array<number>;
+  idValues: Array<number>;
+}
 
 const getPosts = (state: RootState): PostState['data'] => state.posts.data;
 const getFilters = (state: RootState): PostState['filters'] => state.posts.filters;

@@ -1,15 +1,21 @@
-import * as React from 'react';
+// external deps, type defs, utils
+import React, { Component } from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+// app level type defs & utils
 import { RootState } from '../store';
 import { fetchPostsData } from '../store/posts/actions';
 import { filterSelector } from '../store/posts/selectors';
+
+// UI related imports
 import Table  from 'antd/lib/table';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Animate from '../components/Animate';
 import UITableHeader from './UITableHeader';
 import '../styles/table.scss';
 
+// component level type defs
 type State = {
   filteredPosts: any;
   loading: boolean;
@@ -19,13 +25,12 @@ interface Props {
 };
 
 
-class UITable extends React.Component<State & Props> {
+class UITable extends Component<State & Props> {
   componentDidMount() {
     this.props.fetchPostsData();
   }
   render() {
     const { filteredPosts, loading } = this.props;
-    const rowKey = () => Math.random().toString(36).substr(2, 9)
     let Column = Table.Column;
     return (
       <div className="App">
@@ -36,7 +41,7 @@ class UITable extends React.Component<State & Props> {
           <Animate>
             <Table
               dataSource={filteredPosts.data}
-              rowKey={() => rowKey()}
+              rowKey={() => Math.random().toString(36).substr(2, 9)}
               pagination={false}
               scroll={{ y: '100vh' }}
             >

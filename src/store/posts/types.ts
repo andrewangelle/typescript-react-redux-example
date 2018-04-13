@@ -9,12 +9,8 @@ export interface PostData {
 export interface PostFilter {
   filterBy: string;
   currentValue: string | number;
+  // optional because it is not passed a value when used by setTableFilter action
   data?: Array<PostData>
-}
-
-export interface FilterSelector extends PostFilter {
-  userIdValues: Array<number>;
-  idValues: Array<number>;
 }
 
 export interface BaseAction {
