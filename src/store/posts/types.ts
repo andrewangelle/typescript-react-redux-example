@@ -1,4 +1,3 @@
-
 export interface PostData {
   id: number;
   userId: number;
@@ -6,26 +5,18 @@ export interface PostData {
   body: string;
 }
 
-export interface PostFilter {
+export interface TableFilters {
   filterBy: string;
   currentValue: string | number;
-  // optional because it is not passed a value when used by setTableFilter action
-  data?: Array<PostData>
+  data?: Array<any>;
+  userIdValues?: Array<number>;
+  idValues?: Array<number>;
 }
 
-export interface BaseAction {
-  type: string;
-  payload?: object;
+
+export interface PostState {
+  loading: boolean;
+  error: null | Error;
+  data: object;
+  filters: TableFilters
 }
-
-export interface GetPostsRequestAction extends BaseAction {}
-export interface GetPostsSuccessAction extends BaseAction {}
-export interface GetPostsFailureAction extends BaseAction {}
-export interface SetTableFilter extends BaseAction {}
-
-export type PostsActions =
-  GetPostsRequestAction |
-  GetPostsSuccessAction |
-  GetPostsFailureAction |
-  SetTableFilter
-;

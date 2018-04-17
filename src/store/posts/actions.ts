@@ -1,54 +1,34 @@
-import { Dispatch, ActionCreator } from 'redux';
-import {
-  GetPostsRequestAction,
-  GetPostsSuccessAction,
-  GetPostsFailureAction,
-  SetTableFilter,
-  PostData,
-  PostsActions,
-  PostFilter
-} from './types';
+import { Dispatch } from 'redux';
+import { ActionCreatorsMap } from '../helpers';
+import { createAction } from 'redux-actions';
 import * as postsApi from '../middleware/posts'
 
-export const getPostsRequest: ActionCreator<GetPostsRequestAction> = (type: string) => ({
-  type: 'GET_POSTS_REQUEST'
-})
+export const GET_POSTS_REQUEST = createAction('GET_POSTS_REQUEST');
+export const GET_POSTS_SUCCESS = createAction('GET_POSTS_SUCCESS', (data: object) => data);
+export const GET_POSTS_FAILURE = createAction('GET_POSTS_FAILURE', (err: Error) => err);
+export const UPDATE_FILTER = createAction('UPDATE_FILTER', (options: object) => options)
 
-export const getPostsSuccess: ActionCreator<GetPostsSuccessAction> = (data: PostData) => ({
-  type: 'GET_POSTS_SUCCESS',
-  payload: {
-    data
-  }
-})
+export const PostActions: ActionCreatorsMap = {
+  getPostsRequest: GET_POSTS_REQUEST,
+  getPostsSuccess:  GET_POSTS_SUCCESS,
+  getPostsFailure: GET_POSTS_FAILURE,
+  updateFilter: UPDATE_FILTER,
+}
 
-export const getPostsFailure: ActionCreator<GetPostsFailureAction> = (error: Error) => ({
-  type: 'GET_POSTS_FAILURE',
-  payload: {
-    error
-  }
-})
-
-export const setTableFilter: ActionCreator<SetTableFilter> = (options: PostFilter) => ({
-  type: 'UPDATE_FILTER',
-  payload: {
-    options
-  }
-})
-
-export function fetchPostsData(): (dispatch: Dispatch<PostsActions>) => Promise<void> {
-  return async (dispatch: Dispatch<PostsActions>) => {
-    dispatch(getPostsRequest());
+export function fetchPostsData(): (dispatch: Dispatch<typeof PostActions>) => Promise<void> {
+  return async (dispatch: Dispatch<typeof PostActions>) => {
+    dispatch(PostActions.getPostsRequest());
     try {
       const data = await postsApi.fetchTableData()
-      dispatch(getPostsSuccess(data))
+      dispatch(PostActions.getPostsSuccess(data))
     } catch(err) {
-      dispatch(getPostsFailure(err))
+      dispatch(PostActions.getPostsFailure(err))
     }
   }
 }
 
-export function setFilter(value: PostFilter): (Dispatch<PostsActions>) {
-  return (dispatch: Dispatch<PostsActions>) => {
-    dispatch(setTableFilter(value))
+export function setTableFilter(options: object): (Dispatch<typeof PostActions>) {
+  return (dispatch: Dispatch<typeof PostActions>) => {
+    dispatch(PostActions.updateFilter(options))
   }
 }

@@ -1,6 +1,7 @@
+import * as Actions from './actions';
+import { PostState } from './types';
+import { ActionsUnion } from '../helpers';
 import { Reducer } from 'redux';
-import { PostsActions } from './types';
-import { PostState } from '../index';
 
 const initialState: PostState = {
   loading: false,
@@ -13,8 +14,10 @@ const initialState: PostState = {
   }
 }
 
-const postsReducer: Reducer<PostState> = (state: PostState = initialState, action) => {
-  switch ((action as PostsActions).type) {
+type Actions = ActionsUnion<typeof Actions.PostActions>
+
+const postsReducer: Reducer<Actions> = (state: PostState = initialState, action: Actions = Actions.PostActions) => {
+  switch (action.type as string) {
     case 'GET_POSTS_REQUEST':
       return {
         ...state,
@@ -26,22 +29,22 @@ const postsReducer: Reducer<PostState> = (state: PostState = initialState, actio
         loading: false,
         data: {
           ...state.data,
-          ...action.payload.data
+          ...action.payload
         }
       };
     case 'GET_POSTS_FAILURE':
       return {
         ...state,
         loading: false,
-        error: action.payload.error
+        error: action.payload
       }
     case 'UPDATE_FILTER':
       return {
         ...state,
         filters: {
           ...state.filters,
-          currentValue: action.payload.options.currentValue,
-          filterBy: action.payload.options.filterBy
+          currentValue: action.payload.currentValue,
+          filterBy: action.payload.filterBy
         }
       }
     default:
